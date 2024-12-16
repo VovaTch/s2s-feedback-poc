@@ -1,6 +1,6 @@
 LANGUAGES = [
-    {"language": "Spanish", "img_path": "assets/flags/spain.png"},
-    {"language": "German", "img_path": "assets/flags/germany.png"},
-    {"language": "Russian", "img_path": "assets/flags/russia.png"},
-    {"language": "Chinese", "img_path": "assets/flags/china.png"},
+    {"language": "Spanish", "image_path": "assets/flags/spain.png"},
+    {"language": "German", "image_path": "assets/flags/germany.png"},
+    {"language": "Russian", "image_path": "assets/flags/russia.png"},
+    {"language": "Chinese", "image_path": "assets/flags/china.png"},
 ]
