@@ -1,13 +1,23 @@
+import os
 from typing import Any
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+import instructor
+from openai import OpenAI
 import uvicorn
 import dotenv
 
+from prompts.feedback_request import get_feedback_request
+from utils.prompting import create_message_openai
+from schema.feedback import FeedbackResponse, Query
 from prompts.system import S2S_SYSTEM_PROMPT
 from database import SessionLocal, engine
 from schema.lang import Base
+from seed.data import LANGUAGES
+
+# Load dotenv
+dotenv.load_dotenv(override=True)
 
 # SQL create bases
 Base.metadata.create_all(bind=engine)
@@ -25,6 +35,10 @@ app.add_middleware(
 system_prompt = S2S_SYSTEM_PROMPT
 
 
+# OpenAI API
+client = instructor.from_openai(OpenAI(api_key=os.getenv("OPENAI_API_KEY")))
+
+
 # Get session
 def get_db():
     db = SessionLocal()
@@ -39,6 +53,23 @@ def read_root() -> dict[str, Any]:
     return {"message": "Hello, World!"}
 
 
+@app.post("/s2s_eval/", response_model=FeedbackResponse)
+async def get_response(query: Query) -> FeedbackResponse:
+    system_message = create_message_openai("system", system_prompt)
+    language = LANGUAGES[query.lang_id]["language"]  # TODO: do it with a database
+    user_message = create_message_openai(
+        "user", get_feedback_request(query.eng_sentence, query.lang_sentence, language)
+    )
+    response: FeedbackResponse = client.chat.completions.create(
+        model="gpt-4o-2024-08-06",
+        messages=[system_message, user_message],  # type: ignore
+        response_model=FeedbackResponse,
+    )
+    try:
+        return response
+    except:
+        raise HTTPException(status_code=422, detail="Model response is not valid")
+
+
 if __name__ == "__main__":
-    dotenv.load_dotenv(".env", override=True)
     uvicorn.run(app, host="127.0.0.1", port=8000)
