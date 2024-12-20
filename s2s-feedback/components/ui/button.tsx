@@ -16,9 +16,19 @@ const buttonVariants = cva(
           "bg-white text-black border-violet-200 border-2 border-b-4 active:border-b-2 hover:bg-indigo-100 text-indigo-500\
           border-r-4 active:border-r-2 ",
         primary:
-          "bg-violet-600 text-primary-foreground border-0 border-indigo-700 border border-b-4 active:border-b-2 hover:bg-violet-500\
+          "bg-violet-600 text-primary-foreground border-0 border-indigo-800 border border-b-4 active:border-b-2 hover:bg-violet-500\
           border-r-4 active:border-r-2",
         primaryOutline: "bg-white text-indigo-500 hover:bg-violet-100",
+        secondary:
+          "bg-indigo-600 text-primary-foreground border-0 border-blue-800 border border-b-4 active:border-b-2 hover:bg-indigo-500\
+          border-r-4 active:border-r-2",
+        secondaryOutline: "bg-white text-blue-500 hover:bg-indigo-100",
+        danger:
+          "bg-purple-600 text-primary-foreground border-0 border-violet-800 border border-b-4 active:border-b-2 hover:bg-purple-500\
+          border-r-4 active:border-r-2",
+        dangerOutline: "bg-white text-violet-500 hover:bg-purple-100",
+        flag: "border-0 border-violet-300 hover:bg-gradient-to-b from-violet-300 to-transparent border border-b-4 active:border-b-2\
+        border-r-4 active:border-r-2 hover:opacity-75",
       },
       size: {
         default: "h-11 px-4 py-2",
@@ -26,6 +36,7 @@ const buttonVariants = cva(
         lg: "h-12 px-8",
         icon: "h-10 w-10",
         rounded: "rounded-full",
+        flag: "bg-no-repeat bg-center bg-cover h-[75px] w-[100px]",
       },
     },
     defaultVariants: {
