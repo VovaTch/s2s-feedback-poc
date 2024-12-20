@@ -29,6 +29,13 @@ const buttonVariants = cva(
         dangerOutline: "bg-white text-violet-500 hover:bg-purple-100",
         flag: "border-0 border-violet-300 hover:bg-gradient-to-b from-violet-300 to-transparent border border-b-4 active:border-b-2\
         border-r-4 active:border-r-2 hover:opacity-75",
+        flagOutline: "border-4 border-violet-800",
+        ghost:
+          "bg-transparent text-violet-300 border-transparent border-0 hover:bg-violet-100",
+        sidebar:
+          "bg-transparent text-indigo-300 border-2 border-transparent hover:bg-violet-100 transition-none",
+        sidebarOutline:
+          "bg-indigo-500/15 text-indigo-500 border-indigo-300 border-2 hover:bg-indigo-500/20 transition-none",
       },
       size: {
         default: "h-11 px-4 py-2",
@@ -36,7 +43,7 @@ const buttonVariants = cva(
         lg: "h-12 px-8",
         icon: "h-10 w-10",
         rounded: "rounded-full",
-        flag: "bg-no-repeat bg-center bg-cover h-[75px] w-[100px]",
+        flag: "bg-no-repeat bg-center bg-cover h-[150px] w-[200px] rounded-2xl",
       },
     },
     defaultVariants: {

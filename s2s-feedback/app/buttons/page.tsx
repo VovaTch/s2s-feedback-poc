@@ -1,7 +1,12 @@
 import FlagButton from "@/components/custom/flagButton";
+import FlagButtonOutline from "@/components/custom/flagButtonOutline";
 import { Button } from "@/components/ui/button";
 import React from "react";
 
+/**
+ * A page for testing all flag types
+ * @returns Flag test page
+ */
 const ButtonsPage = () => {
   return (
     <div className="p-4 space-y-4 flex flex-col max-w-[200px]">
@@ -13,7 +18,11 @@ const ButtonsPage = () => {
       <Button variant="secondaryOutline">Secondary Outline</Button>
       <Button variant="danger">Danger</Button>
       <Button variant="dangerOutline">Danger Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="sidebar">Sidebar</Button>
+      <Button variant="sidebarOutline">Sidebar Outline</Button>
       <FlagButton path="flags/germany.svg">Flag</FlagButton>
+      <FlagButtonOutline path="flags/china.svg">Flag Outline</FlagButtonOutline>
     </div>
   );
 };
