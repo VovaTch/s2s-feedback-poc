@@ -1,5 +1,5 @@
-import FlagButton from "@/components/custom/flagButton";
-import FlagButtonOutline from "@/components/custom/flagButtonOutline";
+import FlagButton from "@/components/custom/flag-button";
+import FlagButtonOutline from "@/components/custom/flag-button-outline";
 import { Button } from "@/components/ui/button";
 import React from "react";
 
