@@ -3,6 +3,7 @@ import React from "react";
 
 type FlagButtonProps = {
   path?: string;
+  onClick?: () => void;
 };
 
 /**
@@ -17,6 +18,7 @@ type FlagButtonProps = {
  */
 const FlagButton: React.FC<React.PropsWithChildren<FlagButtonProps>> = ({
   path,
+  onClick,
   children,
 }) => {
   return (
@@ -28,6 +30,7 @@ const FlagButton: React.FC<React.PropsWithChildren<FlagButtonProps>> = ({
         backgroundBlendMode: "lighten",
         backgroundColor: "gray",
       }}
+      onClick={onClick}
     >
       <div
         className="h-full w-full hover:bg-gradient-to-b hover:from-violet-300 to-transparent\
