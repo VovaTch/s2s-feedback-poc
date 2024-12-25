@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field, ValidationError, model_validator
 
 
 class Query(BaseModel):
-    lang_id: int
+    lang_id: str
     eng_sentence: str
     lang_sentence: str
 

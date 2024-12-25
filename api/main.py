@@ -26,7 +26,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://localhost:3000"],
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -55,8 +55,10 @@ def read_root() -> dict[str, Any]:
 
 @app.post("/s2s_eval/", response_model=FeedbackResponse)
 async def get_response(query: Query) -> FeedbackResponse:
+    print(query)
     system_message = create_message_openai("system", system_prompt)
     language = LANGUAGES[query.lang_id]["language"]  # TODO: do it with a database
+    # language = "Spanish" # TODO; debugging
     user_message = create_message_openai(
         "user", get_feedback_request(query.eng_sentence, query.lang_sentence, language)
     )

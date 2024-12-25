@@ -1,34 +1,20 @@
 "use client";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { langState, languageStates } from "../../static/lang-states";
-import { ControllerRenderProps, useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import { notFound, useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { FormDisplay } from "./form";
 
-const FormSchema = z.object({
-  engSentence: z.string().min(2, {
-    message: "English sentence must contain at least 2 characters.",
-  }),
-  langSentence: z.string().min(2, {
-    message: "Alt Language sentence must contain at least 2 characters.",
-  }),
-});
+import LLMResponseCard, { LangFeedbackResponse } from "./llm-response";
 
 export default function LangEnterPage() {
   const params = useParams<{ langId: string }>();
   const [langState, setLangState] = useState<langState>(languageStates[0]);
+  const [llmResponse, setLlmResponse] = useState<LangFeedbackResponse | null>(
+    null,
+  );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const langStateInd = languageStates.find(
@@ -40,13 +26,42 @@ export default function LangEnterPage() {
     setLangState(langStateInd);
   }, [params.langId]);
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      engSentence: "",
-      langSentence: "",
-    },
-  });
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError(null);
+    setIsLoading(true);
+    try {
+      const formData = new FormData(event.currentTarget);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/s2s_eval/`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(Object.fromEntries(formData)),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form.");
+      }
+
+      const data = await response.json();
+      setLlmResponse(data);
+    } catch (e: any) {
+       
+      setError(e.message);
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const onReset = () => {
+    setLlmResponse(null);
+  }
 
   return (
     <div
@@ -55,79 +70,18 @@ export default function LangEnterPage() {
       }}
       className="flex-1 flex-col flex items-center justify-center bg-cover bg-center bg-blend-multiply bg-indigo-300"
     >
-      <div className="bg-gradient-to-tr from-violet-300 to-transparent flex-1 flex-col w-full flex items-center justify-center">
-        <Form {...form}>
-          <form onSubmit={() => {}} className='bg-white p-5 rounded-lg shadow-lg'>
-            <p className="text-sm lg:text-lg font-bold text-center text-indigo-800 pb-5 tracking-wider">
-              From English to {langState.name}
-            </p>
-            <FormField
-              control={form.control}
-              name="engSentence"
-              render={({ field }) => (
-                <>
-                  <LangSentenceFormItem field={field} langName="English" />
-                </>
-              )}
-            ></FormField>
-            <FormField
-              control={form.control}
-              name="langSentence"
-              render={({ field }) => (
-                <>
-                  <LangSentenceFormItem
-                    field={field}
-                    langName={langState.name}
-                  />
-                </>
-              )}
-            />
-            <Button
-              variant="primary"
-              size="lg"
-              className="w-full mt-5"
-              type="submit"
-            >
-              Submit
-            </Button>
-            <Button
-              variant="secondary"
-              size="lg"
-              className="w-full mt-5"
-              type="reset"
-            >
-              Reset
-            </Button>
-          </form>
-        </Form>
-      </div>
+      {llmResponse ? (
+        <LLMResponseCard 
+          onReset={onReset} 
+          llmResponse={llmResponse}
+        />
+      ) : (
+        <FormDisplay
+          onSubmit={onSubmit}
+          isLoading={isLoading}
+          langState={langState}
+        />
+      )}
     </div>
   );
 }
-
-type SentFormItem = {
-  field: ControllerRenderProps<
-    {
-      engSentence: string;
-      langSentence: string;
-    },
-    "langSentence" | "engSentence"
-  >;
-  langName: string;
-};
-
-const LangSentenceFormItem = ({ field, langName }: SentFormItem) => {
-  return (
-    <FormItem className="flex mb-4 min-w-[400px] items-center justify-center">
-      <FormLabel className=" w-1/3 text-2xl text-indigo-700 font-extrabold tracking-wider">{langName}</FormLabel>
-      <FormControl>
-        <Textarea
-          className="w-2/3 shadow-md"
-          placeholder={`Write your ${langName} sentence here...`}
-          {...field}
-        />
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  );
-};
