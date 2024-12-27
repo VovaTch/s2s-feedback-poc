@@ -20,27 +20,32 @@ export const FormSchema = z.object({
   }),
 });
 
-export const FormDisplay = ({
-  onSubmit,
-  isLoading,
-  langState,
-}: {
+type Props = {
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   isLoading: boolean;
   langState: langState;
-}) => {
+};
+
+export const FormDisplay = ({ onSubmit, isLoading, langState }: Props) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       eng_sentence: "",
       lang_sentence: "",
     },
+    mode: "onChange",
   });
 
   return (
     <div className="bg-gradient-to-tr from-violet-300 to-transparent flex-1 flex-col w-full flex items-center justify-center">
       <Form {...form}>
-        <form onSubmit={onSubmit} className="bg-white p-5 rounded-lg shadow-lg">
+        <form
+          onSubmit={onSubmit}
+          onReset={() => {
+            form.reset();
+          }}
+          className="bg-white p-5 rounded-lg shadow-lg"
+        >
           <p className="text-sm lg:text-lg font-bold text-center text-indigo-800 pb-5 tracking-wider">
             From English to {langState.name}
           </p>

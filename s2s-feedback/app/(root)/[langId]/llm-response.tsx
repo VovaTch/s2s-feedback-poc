@@ -22,13 +22,12 @@ export type LangFeedbackResponse = {
   correct_translations: string[];
 };
 
-export default function LLMResponseCard({
-  onReset,
-  llmResponse,
-}: {
+type Props = {
   onReset: () => void;
   llmResponse: LangFeedbackResponse | null;
-}) {
+};
+
+export default function LLMResponseCard({ onReset, llmResponse }: Props) {
   const value = llmResponse ? llmResponse.total_rating * 10 : 0;
   const rgbValue = `rgb(${value ? 255 - value * 2.55 : 0}, ${value ? value * 2.55 : 0}, 0.0)`;
   const backgroundRgbaValue = `rgba(${value ? 255 - value * 2.55 : 0}, ${value ? value * 2.55 : 0}, 0.0, 0.2)`;
@@ -84,7 +83,7 @@ export default function LLMResponseCard({
                 )}
               </div>
               <DrawerFooter>
-                <DrawerClose asChild>
+                <DrawerClose asChild={true}>
                   <Button variant="primaryOutline">OK</Button>
                 </DrawerClose>
               </DrawerFooter>
@@ -104,13 +103,12 @@ export default function LLMResponseCard({
   );
 }
 
-function ErrorCard({
-  error,
-  pointsDeducted,
-}: {
+type ErrorProps = {
   error: string;
   pointsDeducted: number;
-}) {
+};
+
+function ErrorCard({ error, pointsDeducted }: ErrorProps) {
   return (
     <div className="bg-white p-3 shadow-violet-200 border-b-2 border-indigo-50 m-3 mt-5 flex flex-row items-center">
       <h1 className="min-w-[70px] text-4xl font-extrabold text-indigo-800">
@@ -123,11 +121,13 @@ function ErrorCard({
   );
 }
 
+type CorrectTranslationProps = {
+  correctTranslation: string;
+};
+
 function CorrectTranslationCard({
   correctTranslation,
-}: {
-  correctTranslation: string;
-}) {
+}: CorrectTranslationProps) {
   return (
     <div className="bg-white p-3 p-b-1 border-b-2 shadow-violet-200  border-indigo-100 m-1 items-center">
       <h2

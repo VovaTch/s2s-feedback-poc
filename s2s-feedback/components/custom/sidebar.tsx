@@ -9,9 +9,10 @@ import Image from "next/image";
 
 type props = {
   className?: string;
+  onPress?: (open: boolean) => void;
 };
 
-export const Sidebar = ({ className }: props) => {
+export const Sidebar = ({ className, onPress }: props) => {
   const currentLangId = usePathname().split("/")[1];
   return (
     <div
@@ -29,6 +30,9 @@ export const Sidebar = ({ className }: props) => {
               }
               size="lg"
               className="min-w-[192px]"
+              onClick={() => {
+                onPress?.(false);
+              }}
             >
               <div className="flex items-center justify-center h-full w-full">
                 <div className="w-1/3">

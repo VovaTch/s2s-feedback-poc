@@ -7,29 +7,6 @@ import { FormDisplay } from "./form";
 
 import LLMResponseCard, { LangFeedbackResponse } from "./llm-response";
 
-// const dummyLlmResponse: LangFeedbackResponse = {
-//   thoughts: [
-//     "This is a CoT thought, как дела?a",
-//     "Este traducción está muy bueno.",
-//   ],
-//   total_rating: 6,
-//   errors: [
-//     {
-//       message: "This is an error message because I hate the first sentence.",
-//       rating_deducted: 1,
-//     },
-//     {
-//       message:
-//         "This is an error message because I hate the second sentence even more.",
-//       rating_deducted: 2,
-//     },
-//   ],
-//   correct_translations: [
-//     "Ich möchte meine Fahrkarte stornieren",
-//     "Me da miedo escribir en español cuando no tengo un corrector ortográfico.",
-//   ],
-// };
-
 export default function LangEnterPage() {
   const params = useParams<{ langId: string }>();
   const [langState, setLangState] = useState<langState>(languageStates[0]);
@@ -99,7 +76,8 @@ export default function LangEnterPage() {
       style={{
         backgroundImage: `url(${langState.bgPath})`,
       }}
-      className="flex-1 flex-col flex items-center justify-center bg-cover bg-center bg-blend-multiply bg-indigo-300"
+      className="flex-1 flex-col flex items-center justify-center bg-cover bg-center bg-blend-multiply bg-indigo-300\
+      transition fade-in-0 duration-500"
     >
       {llmResponse ? (
         <LLMResponseCard onReset={onReset} llmResponse={llmResponse} />
