@@ -7,6 +7,29 @@ import { FormDisplay } from "./form";
 
 import LLMResponseCard, { LangFeedbackResponse } from "./llm-response";
 
+// const dummyLlmResponse: LangFeedbackResponse = {
+//   thoughts: [
+//     "This is a CoT thought, как дела?a",
+//     "Este traducción está muy bueno.",
+//   ],
+//   total_rating: 6,
+//   errors: [
+//     {
+//       message: "This is an error message because I hate the first sentence.",
+//       rating_deducted: 1,
+//     },
+//     {
+//       message:
+//         "This is an error message because I hate the second sentence even more.",
+//       rating_deducted: 2,
+//     },
+//   ],
+//   correct_translations: [
+//     "Ich möchte meine Fahrkarte stornieren",
+//     "Me da miedo escribir en español cuando no tengo un corrector ortográfico.",
+//   ],
+// };
+
 export default function LangEnterPage() {
   const params = useParams<{ langId: string }>();
   const [langState, setLangState] = useState<langState>(languageStates[0]);
@@ -32,6 +55,12 @@ export default function LangEnterPage() {
     setIsLoading(true);
     try {
       const formData = new FormData(event.currentTarget);
+      console.log(
+        JSON.stringify({
+          ...Object.fromEntries(formData),
+          lang_id: langState.id,
+        }),
+      );
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/s2s_eval/`,
         {
@@ -40,7 +69,10 @@ export default function LangEnterPage() {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(Object.fromEntries(formData)),
+          body: JSON.stringify({
+            ...Object.fromEntries(formData),
+            lang_id: langState.id,
+          }),
         },
       );
 
@@ -51,7 +83,6 @@ export default function LangEnterPage() {
       const data = await response.json();
       setLlmResponse(data);
     } catch (e: any) {
-       
       setError(e.message);
       console.error(error);
     } finally {
@@ -61,7 +92,7 @@ export default function LangEnterPage() {
 
   const onReset = () => {
     setLlmResponse(null);
-  }
+  };
 
   return (
     <div
@@ -71,10 +102,7 @@ export default function LangEnterPage() {
       className="flex-1 flex-col flex items-center justify-center bg-cover bg-center bg-blend-multiply bg-indigo-300"
     >
       {llmResponse ? (
-        <LLMResponseCard 
-          onReset={onReset} 
-          llmResponse={llmResponse}
-        />
+        <LLMResponseCard onReset={onReset} llmResponse={llmResponse} />
       ) : (
         <FormDisplay
           onSubmit={onSubmit}

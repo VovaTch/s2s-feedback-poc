@@ -58,6 +58,7 @@ async def get_response(query: Query) -> FeedbackResponse:
     print(query)
     system_message = create_message_openai("system", system_prompt)
     language = LANGUAGES[query.lang_id]["language"]  # TODO: do it with a database
+    print(f"Language: {language}")
     # language = "Spanish" # TODO; debugging
     user_message = create_message_openai(
         "user", get_feedback_request(query.eng_sentence, query.lang_sentence, language)

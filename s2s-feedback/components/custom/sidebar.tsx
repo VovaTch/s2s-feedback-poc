@@ -16,7 +16,7 @@ export const Sidebar = ({ className }: props) => {
   return (
     <div
       className={cn(
-        "flex h-full lg:w-[256px] lg:fixed left-0 top-0 px-4 lg:border-r-2 flex-col flex-1",
+        "flex h-full lg:w-[256px] lg:fixed left-0 top-0 px-4 lg:border-r-2 flex-col flex-1 pt-[150px] lg:pt-[50px]",
         className,
       )}
     >
