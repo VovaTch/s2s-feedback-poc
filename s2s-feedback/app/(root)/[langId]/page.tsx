@@ -59,6 +59,7 @@ export default function LangEnterPage() {
 
       const data = await response.json();
       setLlmResponse(data);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setError(e.message);
       console.error(error);

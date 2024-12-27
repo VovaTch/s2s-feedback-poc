@@ -8,13 +8,13 @@ from openai import OpenAI
 import uvicorn
 import dotenv
 
-from prompts.feedback_request import get_feedback_request
-from utils.prompting import create_message_openai
-from schema.feedback import FeedbackResponse, Query
-from prompts.system import S2S_SYSTEM_PROMPT
-from database import SessionLocal, engine
-from schema.lang import Base
-from seed.data import LANGUAGES
+from api.prompts.feedback_request import get_feedback_request
+from api.utils.prompting import create_message_openai
+from api.schema.feedback import FeedbackResponse, Query
+from api.prompts.system import S2S_SYSTEM_PROMPT
+from api.database import SessionLocal, engine
+from api.schema.lang import Base
+from api.seed.data import LANGUAGES
 
 # Load dotenv
 dotenv.load_dotenv(override=True)

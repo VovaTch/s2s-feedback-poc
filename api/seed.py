@@ -1,7 +1,7 @@
-from schema.lang import LanguageChoiceCreate, create_language
-from seed.data import LANGUAGES
-from database import SessionLocal, engine
-from schema.lang import Base
+from api.schema.lang import LanguageChoiceCreate, create_language
+from api.seed.data import LANGUAGES
+from api.database import SessionLocal, engine
+from api.schema.lang import Base
 
 # SQL create bases
 Base.metadata.create_all(bind=engine)

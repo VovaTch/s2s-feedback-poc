@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
-from database import Base
+from ..database import Base
 
 class LanguageChoice(Base):
     __tablename__ = "language_choices"
