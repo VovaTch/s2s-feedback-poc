@@ -9,7 +9,7 @@ Base.metadata.create_all(bind=engine)
 
 def main() -> None:
     db = SessionLocal()
-    for lang_data in LANGUAGES:
+    for lang_data in LANGUAGES.values():
         create_language(
             db,
             LanguageChoiceCreate(

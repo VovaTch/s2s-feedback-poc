@@ -4,7 +4,6 @@ from pydantic import BaseModel
 
 from database import Base
 
-
 class LanguageChoice(Base):
     __tablename__ = "language_choices"
 
