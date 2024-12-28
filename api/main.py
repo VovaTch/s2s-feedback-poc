@@ -2,7 +2,7 @@ import os
 from typing import Any
 
 from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.cors import CORSMiddleware
 import instructor
 from openai import OpenAI
 import uvicorn
