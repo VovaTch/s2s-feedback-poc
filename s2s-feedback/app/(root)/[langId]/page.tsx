@@ -61,7 +61,7 @@ export default function LangEnterPage() {
       setLlmResponse(data);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      setError(e.message);
+      setError(e);
       console.error(error);
     } finally {
       setIsLoading(false);
