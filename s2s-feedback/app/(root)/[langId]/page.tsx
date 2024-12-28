@@ -32,12 +32,6 @@ export default function LangEnterPage() {
     setIsLoading(true);
     try {
       const formData = new FormData(event.currentTarget);
-      console.log(
-        JSON.stringify({
-          ...Object.fromEntries(formData),
-          lang_id: langState.id,
-        }),
-      );
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/s2s_eval/`,
         {

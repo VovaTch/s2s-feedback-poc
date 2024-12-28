@@ -9,11 +9,11 @@ import { z } from "zod";
 import { LangSentenceFormItem } from "./form-item";
 
 export const FormSchema = z.object({
-  eng_sentence: z.string().min(2, {
-    message: "English sentence must contain at least 2 characters.",
+  eng_sentence: z.string().nonempty({
+    message: "English sentence cannot be empty.",
   }),
-  lang_sentence: z.string().min(2, {
-    message: "Alt Language sentence must contain at least 2 characters.",
+  lang_sentence: z.string().nonempty({
+    message: "Language sentence cannot be empty.",
   }),
   lang_id: z.number().int().min(0, {
     message: "Language ID must be a positive number.",
@@ -33,7 +33,7 @@ export const FormDisplay = ({ onSubmit, isLoading, langState }: Props) => {
       eng_sentence: "",
       lang_sentence: "",
     },
-    mode: "onChange",
+    mode: "onSubmit",
   });
 
   return (
