@@ -32,73 +32,75 @@ export default function LLMResponseCard({ onReset, llmResponse }: Props) {
   const rgbValue = `rgb(${value ? 255 - value * 2.55 : 0}, ${value ? value * 2.55 : 0}, 0.0)`;
   const backgroundRgbaValue = `rgba(${value ? 255 - value * 2.55 : 0}, ${value ? value * 2.55 : 0}, 0.0, 0.2)`;
   return (
-    <div className="bg-white p-5 rounded-lg shadow-slate-600 shadow-xl m-10">
-      <div
-        className="flex flex-row items-center justify-center border-2 rounded-md"
-        style={{ background: backgroundRgbaValue, borderColor: rgbValue }}
-      >
-        <CircleProgress
-          value={value}
-          className="lg:text-7xl text-4xl m-5 mr-10 h-[80px] w-[80px] lg:h-[150px] lg:w-[150px] shadow-lg font-bold text-slate-600"
-        />
-        <h1 className={cn("text-4xl font-bold")} style={{ color: rgbValue }}>
-          {llmResponse
-            ? FEEDBACK_GRADE[Math.ceil(llmResponse.total_rating).toString()]
-            : ""}
-        </h1>
-      </div>
-      <div>
-        {llmResponse?.errors.map((error, index) => (
-          <ErrorCard
-            key={index}
-            error={error.message}
-            pointsDeducted={error.rating_deducted}
+    <div className="bg-gradient-to-tr from-violet-300 to-transparent flex-1 flex-col w-full flex items-center justify-center">
+      <div className="bg-white p-5 rounded-lg shadow-slate-600 shadow-xl m-10">
+        <div
+          className="flex flex-row items-center justify-center border-2 rounded-md"
+          style={{ background: backgroundRgbaValue, borderColor: rgbValue }}
+        >
+          <CircleProgress
+            value={value}
+            className="lg:text-7xl text-4xl m-5 mr-10 h-[80px] w-[80px] lg:h-[150px] lg:w-[150px] shadow-lg font-bold text-slate-600"
           />
-        ))}
-      </div>
-      <div className="w-full flex flex-col">
-        <Drawer>
-          <DrawerTrigger>
-            <Button variant="ghost" className="w-full lg:p-15 p-5 mt-10">
-              Show Answers
-            </Button>
-          </DrawerTrigger>
-          <DrawerContent>
-            <div className="mx-auto w-full max-w-sm">
-              <DrawerHeader>
-                <DrawerTitle className="text-slate-500 font-bold">
-                  {llmResponse && llmResponse.correct_translations.length > 0
-                    ? "Suggested Correct Translations"
-                    : "No correct translations available"}
-                </DrawerTitle>
-              </DrawerHeader>
-              <div>
-                {llmResponse?.correct_translations.map(
-                  (correctTranslation, index) => (
-                    <CorrectTranslationCard
-                      key={index}
-                      correctTranslation={correctTranslation}
-                    />
-                  ),
-                )}
+          <h1 className={cn("text-4xl font-bold")} style={{ color: rgbValue }}>
+            {llmResponse
+              ? FEEDBACK_GRADE[Math.ceil(llmResponse.total_rating).toString()]
+              : ""}
+          </h1>
+        </div>
+        <div>
+          {llmResponse?.errors.map((error, index) => (
+            <ErrorCard
+              key={index}
+              error={error.message}
+              pointsDeducted={error.rating_deducted}
+            />
+          ))}
+        </div>
+        <div className="w-full flex flex-col">
+          <Drawer>
+            <DrawerTrigger>
+              <Button variant="ghost" className="w-full lg:p-15 p-5 mt-10">
+                Show Answers
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent>
+              <div className="mx-auto w-full max-w-sm">
+                <DrawerHeader>
+                  <DrawerTitle className="text-slate-500 font-bold">
+                    {llmResponse && llmResponse.correct_translations.length > 0
+                      ? "Suggested Correct Translations"
+                      : "No correct translations available"}
+                  </DrawerTitle>
+                </DrawerHeader>
+                <div>
+                  {llmResponse?.correct_translations.map(
+                    (correctTranslation, index) => (
+                      <CorrectTranslationCard
+                        key={index}
+                        correctTranslation={correctTranslation}
+                      />
+                    ),
+                  )}
+                </div>
+                <DrawerFooter>
+                  <DrawerClose asChild={true}>OK
+                    {/* <Button variant="primaryOutline" asChild={true}>OK</Button> */}
+                  </DrawerClose>
+                </DrawerFooter>
               </div>
-              <DrawerFooter>
-                <DrawerClose asChild={true}>
-                  <Button variant="primaryOutline">OK</Button>
-                </DrawerClose>
-              </DrawerFooter>
-            </div>
-          </DrawerContent>
-        </Drawer>
-      </div>
+            </DrawerContent>
+          </Drawer>
+        </div>
 
-      <Button
-        variant={"secondary"}
-        onClick={onReset}
-        className="w-full lg:p-15 p-5 mt-10"
-      >
-        Reset
-      </Button>
+        <Button
+          variant={"secondary"}
+          onClick={onReset}
+          className="w-full lg:p-15 p-5 mt-10"
+        >
+          Reset
+        </Button>
+      </div>
     </div>
   );
 }
