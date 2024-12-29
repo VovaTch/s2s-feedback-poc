@@ -1,7 +1,8 @@
+import logging
 import os
-from typing import Any
+from typing import Any, Callable
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from starlette.middleware.cors import CORSMiddleware
 import instructor
 from openai import OpenAI
@@ -15,6 +16,8 @@ from api.prompts.system import S2S_SYSTEM_PROMPT
 from api.database import SessionLocal, engine
 from api.schema.lang import Base
 from api.seed.data import LANGUAGES
+
+logging.basicConfig(level=logging.INFO)
 
 # Load dotenv
 dotenv.load_dotenv(override=True)
@@ -73,6 +76,13 @@ async def get_response(query: Query) -> FeedbackResponse:
         return response
     except:
         raise HTTPException(status_code=422, detail="Model response is not valid")
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next: Callable) -> Any:
+    logger = logging.getLogger("uvicorn")
+    logger.info(f"Incoming request: {request.method} {request.url}")
+    response = await call_next(request)
+    return response
 
 
 if __name__ == "__main__":
