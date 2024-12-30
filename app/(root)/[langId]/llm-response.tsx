@@ -59,7 +59,7 @@ export default function LLMResponseCard({ onReset, llmResponse }: Props) {
         </div>
         <div className="w-full flex flex-col">
           <Drawer>
-            <DrawerTrigger>
+            <DrawerTrigger asChild>
               <Button variant="ghost" className="w-full lg:p-15 p-5 mt-10">
                 Show Answers
               </Button>
@@ -84,8 +84,8 @@ export default function LLMResponseCard({ onReset, llmResponse }: Props) {
                   )}
                 </div>
                 <DrawerFooter>
-                  <DrawerClose asChild={true}>OK
-                    {/* <Button variant="primaryOutline" asChild={true}>OK</Button> */}
+                  <DrawerClose asChild>
+                    <Button variant="primaryOutline">OK</Button>
                   </DrawerClose>
                 </DrawerFooter>
               </div>
