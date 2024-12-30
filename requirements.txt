@@ -1,7 +1,0 @@
-fastapi
-instructor
-openai
-pydantic
-python-dotenv
-SQLAlchemy
-uvicorn
