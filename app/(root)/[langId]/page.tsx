@@ -32,13 +32,15 @@ export default function LangEnterPage() {
     setIsLoading(true);
     try {
       const formData = new FormData(event.currentTarget);
-      console.log(`Trying to access ${process.env.NEXT_PUBLIC_BACKEND_URL}/s2s_eval/`);
+      console.log(
+        `Trying to access ${process.env.NEXT_PUBLIC_BACKEND_URL}/s2s_eval/`,
+      );
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/s2s_eval/`,
         {
           method: "POST",
           headers: {
-            // "Accept": "application/json",
+            accept: "application/json",
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
@@ -54,7 +56,7 @@ export default function LangEnterPage() {
 
       const data = await response.json();
       setLlmResponse(data);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setError(e);
       console.error(error);
