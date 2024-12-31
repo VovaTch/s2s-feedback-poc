@@ -32,9 +32,6 @@ export default function LangEnterPage() {
     setIsLoading(true);
     try {
       const formData = new FormData(event.currentTarget);
-      console.log(
-        `Trying to access ${process.env.NEXT_PUBLIC_BACKEND_URL}/s2s_eval/`,
-      );
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/s2s_eval/`,
         {
