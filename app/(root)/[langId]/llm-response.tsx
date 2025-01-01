@@ -40,9 +40,9 @@ export default function LLMResponseCard({ onReset, llmResponse }: Props) {
         >
           <CircleProgress
             value={value}
-            className="lg:text-7xl text-4xl m-5 mr-10 h-[80px] w-[80px] lg:h-[150px] lg:w-[150px] shadow-lg font-bold text-slate-600"
+            className="lg:text-7xl text-4xl lg:m-5 m-3 lg:mr-10 mr-5 h-[80px] w-[80px] lg:h-[150px] lg:w-[150px] shadow-lg font-bold text-slate-600"
           />
-          <h1 className={cn("text-4xl font-bold")} style={{ color: rgbValue }}>
+          <h1 className={cn("text-2xl font-bold")} style={{ color: rgbValue }}>
             {llmResponse
               ? FEEDBACK_GRADE[Math.ceil(llmResponse.total_rating).toString()]
               : ""}
@@ -112,8 +112,8 @@ type ErrorProps = {
 
 function ErrorCard({ error, pointsDeducted }: ErrorProps) {
   return (
-    <div className="bg-white p-3 shadow-violet-200 border-b-2 border-indigo-50 m-3 mt-5 flex flex-row items-center">
-      <h1 className="min-w-[70px] text-4xl font-extrabold text-indigo-800">
+    <div className="bg-white p-3 shadow-violet-200 border-b-2 border-indigo-50 m-3 mt-5 lg:flex lg:flex-row items-center">
+      <h1 className="lg:min-w-[70px] text-4xl font-extrabold text-indigo-800">
         -{pointsDeducted}
       </h1>
       <h2 className="lg:text-xl text-sm justify-left text-slate-600">
