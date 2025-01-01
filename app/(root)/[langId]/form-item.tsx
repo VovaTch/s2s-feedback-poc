@@ -22,13 +22,13 @@ type Props = {
 export const LangSentenceFormItem = ({ field, langName }: Props) => {
   return (
     <>
-      <FormItem className="flex mb-4 min-w-[400px] items-center justify-center">
-        <FormLabel className=" w-1/3 text-2xl text-indigo-700 font-extrabold tracking-wider">
+      <FormItem className="lg:flex mb-4 lg:min-w-[400px] items-center justify-center">
+        <FormLabel className=" lg:w-1/3 text-2xl text-indigo-700 font-extrabold tracking-wider">
           {langName}
         </FormLabel>
         <FormControl>
           <Textarea
-            className="w-2/3 shadow-md"
+            className="lg:w-2/3 shadow-md"
             placeholder={`Write your ${langName} sentence here...`}
             {...field}
           />
